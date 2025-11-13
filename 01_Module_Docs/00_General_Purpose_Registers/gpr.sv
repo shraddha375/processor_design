@@ -1,34 +1,34 @@
 // Synchronous writes and reads
 
-module gpr(
-    input logic        clk,
-    input logic        rstn_h,
-    input logic [4:0]  rs1n,
-    input logic [4:0]  rs2n,
-    input logic [4:0]  rdn,
-    input logic [31:0] rdd,
+module gpr #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5)(
+    input logic                     clk,
+    input logic                     rstn_h,
+    input logic [ADDR_WIDTH - 1:0]  rs1n,
+    input logic [ADDR_WIDTH - 1:0]  rs2n,
+    input logic [ADDR_WIDTH - 1:0]  rdn,
+    input logic [DATA_WIDTH - 1:0] rdd,
     input logic        wbe,
 
-    output logic [31:0] rs1d,
-    output logic [31:0] rs2d
+    output logic [DATA_WIDTH - 1:0] rs1d,
+    output logic [DATA_WIDTH - 1:0] rs2d
 );
-    logic [31:0] registers [31:0];
+    logic [DATA_WIDTH - 1:0] registers [31:0];
 
     always(@(posedge clk or negedge rstn_h)) begin
         if (!rstn_h) begin
             for(int i = 0; i < 32; i++) begin
-                registers[i] <= 32'b0;
+                registers[i] <= 'b0;
             end
 
-            rs1d <= 32'b0;
-            rs2d <= 32'b0;
+            rs1d <= 'b0;
+            rs2d <= 'b0;
         end
         else begin
             rs1d <= registers[rs1n];
             rs2d <= registers[rs2n];
-            registers[0] <= 32'b0;
+            registers[0] <= 'b0;
 
-            if (wbe && (rdn != 5'b0)) begin
+            if (wbe && (rdn != 'b0)) begin
                 registers[rdn] <= rdd;
             end 
         end
