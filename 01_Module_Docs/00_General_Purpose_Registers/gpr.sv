@@ -7,7 +7,7 @@ module gpr #(parameter DATA_WIDTH = 32, ADDR_WIDTH = 5)(
     input logic [ADDR_WIDTH - 1:0]  rs2n,
     input logic [ADDR_WIDTH - 1:0]  rdn,
     input logic [DATA_WIDTH - 1:0]  rdd,
-    input logic        wbe,
+    input logic                     wbe,
 
     output logic [DATA_WIDTH - 1:0] rs1d,
     output logic [DATA_WIDTH - 1:0] rs2d
